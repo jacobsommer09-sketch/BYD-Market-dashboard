@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f5f7" />
+  <meta name="description" content="市场渠道看板：渠道地图、市场覆盖、渠道状态与门店详情。" />
+  <title>市场渠道看板 · Channel Network</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://basemaps.cartocdn.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+<main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div class="brand-copy"><div class="eyebrow">Channel Intelligence</div><div class="name">Market Network</div></div>
+      </div>
+      <div class="updated data-source local" id="dataStatus">正在加载渠道数据…</div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div style="color:var(--blue);font-size:14px;font-weight:700">LATAM & CARIBBEAN · 渠道网络</div>
+        <h1>市场渠道看板</h1>
+        <p>将门店渠道数据映射到真实地理位置，一眼查看市场覆盖、渠道状态、区域密度与门店详情。界面采用简洁、留白充足的 Apple-inspired 视觉语言。</p>
+      </div>
+      <div class="hero-note">地图支持缩放、点击门店、市场筛选与关键词搜索<br>线上优先读取数据库，离线自动使用当前数据快照</div>
+    </section>
+
+    <section class="kpis">
+      <div class="kpi"><div class="kpi-label">渠道门店</div><div class="kpi-value" id="kpiStores">—</div><div class="kpi-sub" id="kpiStoresSub">当前筛选结果</div></div>
+      <div class="kpi"><div class="kpi-label">覆盖国家 / 地区</div><div class="kpi-value" id="kpiCountries">—</div><div class="kpi-sub">有经纬度数据的市场</div></div>
+      <div class="kpi"><div class="kpi-label">有效渠道占比</div><div class="kpi-value" id="kpiActive">—</div><div class="kpi-sub" id="kpiActiveSub">有效 / 总渠道</div></div>
+      <div class="kpi"><div class="kpi-label">平均星级</div><div class="kpi-value" id="kpiRating">—</div><div class="kpi-sub" id="kpiRatingSub">仅统计有评分门店</div></div>
+    </section>
+
+    <section class="controls" aria-label="筛选器">
+      <div class="control"><input id="search" type="search" placeholder="搜索门店、城市、区域、国家…" /></div>
+      <div class="control"><select id="country"><option value="">全部国家 / 地区</option></select></div>
+      <div class="control"><select id="status"><option value="">全部状态</option><option value="有效">有效</option><option value="无效">无效</option></select></div>
+      <div class="control"><select id="brand"><option value="">全部品牌</option></select></div>
+      <div class="control"><select id="nature"><option value="">全部渠道性质</option></select></div>
+      <button class="reset" id="reset">重置筛选</button>
+    </section>
+
+    <section class="dashboard">
+      <div class="map-card">
+        <div id="map"></div>
+        <div class="map-float"><i class="live-dot"></i><div><strong id="mapCount">—</strong><br><span>地图中的渠道点位</span></div></div>
+      </div>
+
+      <aside class="side">
+        <div class="side-card">
+          <div class="side-title"><h2>市场覆盖</h2><span id="marketScope">Top markets</span></div>
+          <div id="marketRanking"></div>
+        </div>
+        <div class="side-card" id="detailCard">
+          <div class="side-title"><h2>渠道详情</h2><span>点击地图查看</span></div>
+          <div class="detail-empty" id="detailEmpty"><div><div class="icon">⌖</div><div>选择一个渠道点位<br>查看门店与联络信息</div></div></div>
+          <div class="detail" id="detail" style="display:none"></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="results-card">
+      <div class="results-head">
+        <div><h2>渠道列表</h2><p>显示当前筛选条件下的前 12 个渠道，点击可在地图定位。</p></div>
+        <span class="count-badge" id="resultCount">0</span>
+      </div>
+      <div class="store-list" id="storeList"></div>
+    </section>
+
+    <footer class="footer">
+      <span>Market Channel Dashboard · Live data ready</span>
+      <span>地图底图 © OpenStreetMap contributors · CARTO</span>
+    </footer>
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="./data/channels.js"></script>
+  <script src="./js/data-loader.js"></script>
+  <script src="./js/dashboard.js"></script>
+</body>
+</html>
